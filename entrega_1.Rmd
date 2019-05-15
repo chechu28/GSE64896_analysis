@@ -1,0 +1,93 @@
+---
+title: "entrega1"
+author: "Asier Ràfales Vila"
+date: "15/5/2019"
+output: html_document 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## summary 
+
+## Title
+Gene expression of distinct lung dendritic cell subsets
+## Organism
+Mus musculus
+## Experiment type
+Expression profiling by array
+## Summary
+*Pulmonary dendritic cells are heterogenous cells comprise four distinct subsets including two conventional dendritic cell subsets, CD103+ and CD11bhiCD14lo cells, and two monocyte-derived dendritic cell subsets. Their functions in terms of migration and T cell activation are distinct, but genes regulating their features are to be determined.*
+*We used microarrays to identify a select set of genes that are expressed in conventinal dendritic cells and in monocyte-derived dendriti cells.*
+ 	
+## Overall design
+Four distinct lung DC subsets were purified by flow cytometry-based sorting after inhalation of lipopolusaccharide and ovalbumin. Each subset has three replicates.
+ 	
+## Contributor(s)	
+Nakano H, Cook D
+
+## Citation(s)	
+Nakano H, Moran TP, Nakano K, Gerrish KE et al. Complement receptor C5aR1/CD88 and dipeptidyl peptidase-4/CD26 define distinct hematopoietic lineages of dendritic cells. J Immunol 2015 Apr 15;194(8):3808-19. PMID: 25769922
+
+
+## Load Matrix into R environment 
+
+```{r}
+express <- read.delim("~/Documentos/uni/2n/3r_trimestre/omics techniques/2nd_part/GSE64896_analysis/express.txt", row.names=1, comment.char="#")
+```
+  
+Load targets 
+```{r}
+targets <- read.delim("~/Documentos/uni/2n/3r_trimestre/omics techniques/2nd_part/GSE64896_analysis/targets.txt")
+```
+
+## Change sample name to informative names 
+```{r}
+new_names <- paste(targets$Target, targets$Replicate)
+
+row.names(targets) <- new_names
+```
+
+
+
+
+## Data description 
+
+we have two files the first one, named express, contain a matrix with the information of rows (are diff gens or transcrits),  columns (are diff samples), so the numbers is the expression of the transcrip in each sample. 
+as we can observe 
+
+
+
+```{r}
+summary(express)
+
+boxplot(express)
+
+#1
+hist(express$GSM1582752)
+hist(express$GSM1582753)
+hist(express$GSM1582754)
+hist(express$GSM1582755)
+hist(express$GSM1582756)
+hist(express$GSM1582757)
+hist(express$GSM1582758)
+hist(express$GSM1582759)
+hist(express$GSM1582760)
+hist(express$GSM1582761)
+hist(express$GSM1582762)
+hist(express$GSM1582763)
+
+
+
+
+
+row_mean <- rowMeans(express)
+hist(row_mean)
+## or
+hist(express[,1],main="first row")
+means <- apply(express,1,mean)
+hist(means)
+```
+
+
